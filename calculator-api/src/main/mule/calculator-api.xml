@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="a18c3257-5590-47cc-b72e-b2998d4f64e8" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<vm:config name="VM_Config" doc:name="VM Config" doc:id="57a8547c-2d66-4d78-8947-79d35f60c1b7" >
+		<vm:queues >
+			<vm:queue queueName="myq" />
+		</vm:queues>
+	</vm:config>
+	<flow name="calculator-apiFlow" doc:id="60cb3f40-4fb2-4fed-a5bf-106af1594451" >
+		<http:listener doc:name="Listener" doc:id="9a8c291d-041b-45e0-bae0-cd783ced69ac" config-ref="HTTP_Listener_config" path="calculator"/>
+		<vm:publish queueName="myq" doc:name="Publish" doc:id="b1bb5cd8-ea46-4af1-b5c7-99e8e965b369" config-ref="VM_Config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d46584f3-37ac-41e0-9953-c0ed0c7b9a65" message="payload"/>
+	</flow>
+	<flow name="calculator-apiFlow1" doc:id="cae36677-2359-4cda-84e7-a579ac502fff" >
+		<vm:listener queueName="myq" doc:name="Listener" doc:id="6b076145-55cf-4f1b-9304-2fd67f14b92d" config-ref="VM_Config"/>
+		<logger level="INFO" doc:name="Logger" doc:id="c9e2512e-f610-4a46-9cd7-b09468f049fd" message="paload"/>
+	</flow>
+</mule>
