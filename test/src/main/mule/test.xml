@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ftp="http://www.mulesoft.org/schema/mule/ftp" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ftp http://www.mulesoft.org/schema/mule/ftp/current/mule-ftp.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="3938d31c-6b75-48fa-93be-418ebe53d65d" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="28d26554-d39c-4245-b27e-d257d167d899" />
+	<file:config name="File_Config1" doc:name="File Config" doc:id="5d4e78ee-797c-47b5-a724-cfbb6934f982" />
+	<file:config name="File_Config2" doc:name="File Config" doc:id="34c85d75-5333-4569-9c37-4aba3377a002" />
+	<flow name="testFlow1" doc:id="51ad2b9b-affe-4a2e-bbb4-dcc73233fc73" >
+		<file:listener doc:name="On New or Updated File" doc:id="4948b016-7ae8-41a3-979e-7b60b08dae61" config-ref="File_Config2" directory="C:\Users\DELL\Documents\james" timeBetweenSizeCheckUnit="MINUTES" moveToDirectory="C:\Users\DELL\Desktop\f1">
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="MINUTES" />
+			</scheduling-strategy>
+		</file:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="739403e6-c6f7-4dd3-bd76-906ae26c082c" message="payload"/>
+	</flow>
+	<flow name="testFlow" doc:id="0283b2bf-85f8-4629-8f6d-32f1a73addb5" >
+		<http:listener doc:name="Listener" doc:id="434b7a7b-689d-41bd-b64d-89eaa0be0940" config-ref="HTTP_Listener_config" path="test"/>
+		<file:write doc:name="Write" doc:id="34cacd3a-4b2b-4d35-8ab9-83121a8ecf99" config-ref="File_Config1" path="C:\Users\DELL\Documents\james\New Text Document.txt">
+			<file:content ><![CDATA[#["welcome  to james files"]]]></file:content>
+		</file:write>
+	</flow>
+</mule>
