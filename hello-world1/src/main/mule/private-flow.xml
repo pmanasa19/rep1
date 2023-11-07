@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="private-flowFlow" doc:id="6f42aa45-ce20-413e-9d9c-a02944c07048" >
+		<logger level="INFO" doc:name="Logger" doc:id="803a0406-3c3f-4ded-9092-47edc44aba51" message="this is the privateflow"/>
+	</flow>
+</mule>
